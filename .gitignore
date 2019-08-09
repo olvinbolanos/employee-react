@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+#semantic
+.semantic
+semantic
+
 # production
 /build
 
