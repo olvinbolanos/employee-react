@@ -1,13 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import Employees from './Employees';
+const My404 = () => {
+  return (
+    <div>
+      YOU'RE ON THE WRONG STREET, PAL
+    </div>
+  )
+}
 
 function App() {
   return (
-    <div className="App">
-      Employees check
-    </div>
+    <main>
+      <Switch>
+        {/* <Route exact path='/' component={ Register } /> */}
+        <Route exact path='/employees' component={ Employees }/>
+        <Route component={My404} />
+      </Switch>
+    </main>
   );
 }
-
 export default App;
