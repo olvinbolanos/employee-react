@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CreateEmployee from './CreateEmployee';
+import EmployeeList from './EmployeeList'
 class Employee extends Component {
    state = {
       employees: []
@@ -30,11 +31,33 @@ class Employee extends Component {
          return err
       }
    }
+   getEmployees = async () => {
+      try {
+         const responseGetEmployees = await fetch('http://localhost:9000/api/v1/employee', {
+            credentials: 'include',
+            method: 'GET'
+         });
+         console.log(responseGetEmployees, '<--- responseGetEmployees')
+         if(responseGetEmployees.status !== 200){
+            throw Error('404 from server');
+         }
+         const employeeResponse = await responseGetEmployees.json();
+         console.log(employeeResponse, '<---employeeResponse')
+         this.setState({
+            employees: [...employeeResponse.data]
+         });
+      } catch(err){
+         console.log(err, ' retEmployees Err0rs <--');
+         return err
+      }
+   }
    render(){
       return(
          <div>
             <CreateEmployee addEmployee={this.addEmployee}/>
             Sesame Street EMPLOYEES
+            <EmployeeList employees={this.state.employees} />
+            
          </div>
       )
    }
