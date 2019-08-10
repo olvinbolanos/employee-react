@@ -3,6 +3,8 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Employees from './Employees';
 import Register from './Register'
+import Header from './Header'
+
 const My404 = () => {
   return (
     <div>
@@ -14,6 +16,7 @@ const My404 = () => {
 function App() {
   return (
     <main>
+      <Header />
       <Switch>
         <Route exact path='/' component={ Register } />
         <Route exact path='/employees' component={ Employees }/>
