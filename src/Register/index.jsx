@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import React, { useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom'
 
 
@@ -42,6 +43,7 @@ class Register extends Component {
 
     render() {
         const { username, password } = this.state
+        const { isLogged } = useState(this.state)
         return (
           <div>
             { 
