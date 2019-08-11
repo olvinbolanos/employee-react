@@ -50,9 +50,8 @@ class Login extends Component {
 
         } 
 
-    
-
-    render() {
+        
+        render() {
         const { username, password, message } = this.state
         // const state = { error: "Some weird error" };
         // const { isLogged } = useState(this.state)
