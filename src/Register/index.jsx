@@ -28,12 +28,13 @@ class Register extends Component {
       })
 
       const parsedRegister = await register.json()
-      console.log(parsedRegister, '<--- Response from Register')
+      console.log(parsedRegister, '<--- Response from Register, parsedRegister')
       if(parsedRegister.status.message === 'User Logged In') {
           this.setState({
               isLogged: true
           })
-          console.log('logged in ' + this.state.username)
+          console.log('logged in -->This.state.username' + this.state.username)
+          console.log('isLogged -->This.state.isLogged' + this.state.isLogged)
       } else {
           console.log('failed login')
           this.setState({
