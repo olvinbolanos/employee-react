@@ -5,11 +5,12 @@ import Employees from './Employees';
 import Register from './Register'
 import Login from './Login'
 import Header from './Header'
+import FourZeroFour from './404'
 
 const My404 = () => {
   return (
     <div>
-      YOU'RE ON THE WRONG STREET, PAL
+    <FourZeroFour/>
     </div>
   )
 }
