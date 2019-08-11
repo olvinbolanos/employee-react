@@ -1,107 +1,86 @@
-import React, { Component } from 'react'
-import React, { useState } from 'react';
+import React, {Component} from 'react'
 import { withRouter, Redirect } from 'react-router-dom'
 
-
-
 class Register extends Component {
-    state ={
-        username: '',
-        password: '',
-        isLogged: false
-    }
+  state = {
+      username: '',
+      password: '',
+      email: '',
+      isLogged: false,
+  }
 
+  handleChange = (e) => {
+    this.setState({
+        [e.currentTarget.name] : e.currentTarget.value
+    })
+  } 
 
-    handleChange = (e) => {
-        this.setState({
-            [e.currentTarget.name] : e.currentTarget.value
-        })
-    } 
+  handleSubmit = (e) => {
+      e.preventDefault()
 
-    handleSubmit = async (e) => {
-        e.preventDefault()
-        const register = await fetch("http://localhost:9000/auth/register", {
+      const register = await fetch("http://localhost:9000/auth/register", {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(this.state),
         headers: {
-            "Content-Type" : "application/json"
+            "Content-type" : "application/json"
         }
-        })
+      })
 
-        const parsedRegister = await register.json()
-        console.log(parsedRegister, '<-- Response from register')
-        console.log('logged in')
-        if(parsedRegister.status.message === 'User Logged In') {
+      const parsedRegister = await register.json()
+      console.log(parsedRegister, '<--- Response from Register')
+      if(parsedRegister.status.message === 'User Logged In') {
           this.setState({
-              isLogged: true
+              isLogged: true,
+              message: ''
+          })
+          console.log('logged in ' + this.state.username)
+      } else {
+          console.log('failed login')
+          this.setState({
+              message: parsedRegister.status.message
           })
         }
-
-        } 
-
+  }
 
     render() {
-        const { username, password } = this.state
-        const { isLogged } = useState(this.state)
-        return (
-          <div>
-            { 
-                !this.state.isLogged ?
-                //renders this if the user isn't logged in
-            <div className="ui middle aligned center aligned grid">
-              <div className="column">
-                <h2 className="ui teal image header"></h2>
-                <img src="#" className="image" />
-                <div className="content">
-                    Log-in to your account
-                </div>
-                        
-                <form className="ui large form" onSubmit={this.handleSubmit}>
-                <div className="ui stacked segment">
-                <div className="field">
-                    <div className="ui left icon input ">
-                        <i className="user icon"></i>
-                        <input type="text"
-                        className="img-Class"
-                        name="username"
-                        value={username}
-                        onChange={this.handleChange}
-                        placeholder="Username"
-                        autoComplete="off" />
+        const { username, password, email, message } = this.state
+      return (
+        <div>
+            {
+            !this.state.isLogged ?
+                <div className="row">
+                  <div class="sixteen wide column rendered-example collections-form-shorthand-form-example-subcomponent-id">
+                    <form class="ui form">
+                      <div class="equal width fields">
+                        <div class="field">
+                          <label for="form-subcomponent-shorthand-input-first-name">First name</label>
+                            <div class="ui fluid input">
+                                <input id="form-subcomponent-shorthand-input-first-name" placeholder="Username" type="text" />
+                            </div>
+                        </div>
+                        <div class="field">
+                        <label for="form-subcomponent-shorthand-password">Password</label>
+                        <div class="ui fluid input">
+                          <input id="form-subcomponent-shorthand-password" placeholder="Password" type="text" />
+                        </div>
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <div className="ui left icon input">
-                        <i className="lock icon"></i>
-                        <input type="password"
-                        className="img-Class"
-                        name="password" 
-                        placeholder="Password"
-                        value={password} 
-                        onChange={this.handleChange}
-                        autoComplete="off" />
-                    </div>
-                            
-                    <input className="ui fluid large teal submit button" type="submit" value="Login"/>
-                </div>
-                </div>
-
-                <div className="ui error message"></div>
-
-                </form>
-            </div>
-                        
-                {/* <div className="ui message">
-                New to us? <a href="#">Sign Up</a>
-                </div> */}
-            </div> 
-             : <Redirect to="/employees" />
+                    <button class="ui animated button">
+                      <div class="visible content">Register</div>
+                        <div class="hidden content">
+                          <i aria-hidden="true" class="arrow right icon"></i>
+                        </div>
+                    </button>
+                   </form>
+                  </div>
+                </div> 
+                :  <Redirect to="/employees" />
             }
+
         </div>
-        )
+      )
     }
 }
 
 export default withRouter(Register)
-

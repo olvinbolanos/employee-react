@@ -17,4 +17,16 @@ background-repeat: no-repeat;
 background-attachment: scroll; 
 background-size: 16px 18px; 
 background-position: 98% 50%;
-} 
+}
+
+.error {
+  font-size: 24px;
+  color: red;
+}
+
+.row {
+  padding-bottom: 0px;
+}
+.sixteen {
+  padding: 2rem;
+}
