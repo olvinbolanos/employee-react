@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Hello from '../Hello'
 
 class CreateEmployee extends Component {
    state = {

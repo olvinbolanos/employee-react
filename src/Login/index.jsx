@@ -52,7 +52,7 @@ class Login extends Component {
 
         
         render() {
-        const { username, password, message } = this.state
+        const { username, password } = this.state
         // const state = { error: "Some weird error" };
         // const { isLogged } = useState(this.state)
         return (
@@ -98,8 +98,8 @@ class Login extends Component {
                 </div>
                 </div>
                 {/* just style the error message in index.css */}
+                {this.state.message && <Alert message={this.state.message} />}
                 </form>
-                {<Alert message={message} />}
             </div>
                         
                 {/* <div className="ui message" >

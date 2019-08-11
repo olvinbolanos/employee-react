@@ -10,10 +10,16 @@ class Alert extends Component {
             };
     }
     
-    componentWillReceiveProps(e) {
-        console.log(e)
-        this.setState(e)
-    }   
+    // UNSAFE_componentWillReceiveProps(e) {
+    //    this.setState(e)
+    // } 
+    
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.message !== prevProps.message) {
+          this.fetchData(this.props.message);
+        }
+      }
 
     handleToggleState = () => {
       this.setState(prevState => ({

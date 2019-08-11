@@ -1,4 +1,5 @@
 import React from 'react';
+import Hello from '../Hello'
 
 const Employees = (props) => {
    console.log(props, '<--- props in employee list')
