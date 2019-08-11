@@ -15,7 +15,7 @@ class Register extends Component {
     })
   } 
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
       e.preventDefault()
 
       const register = await fetch("http://localhost:9000/auth/register", {
@@ -31,8 +31,7 @@ class Register extends Component {
       console.log(parsedRegister, '<--- Response from Register')
       if(parsedRegister.status.message === 'User Logged In') {
           this.setState({
-              isLogged: true,
-              message: ''
+              isLogged: true
           })
           console.log('logged in ' + this.state.username)
       } else {
@@ -44,32 +43,38 @@ class Register extends Component {
   }
 
     render() {
-        const { username, password, email, message } = this.state
+        const { username, password, email } = this.state
       return (
         <div>
             {
             !this.state.isLogged ?
                 <div className="row">
-                  <div class="sixteen wide column rendered-example collections-form-shorthand-form-example-subcomponent-id">
-                    <form class="ui form">
-                      <div class="equal width fields">
-                        <div class="field">
-                          <label for="form-subcomponent-shorthand-input-first-name">First name</label>
-                            <div class="ui fluid input">
-                                <input id="form-subcomponent-shorthand-input-first-name" placeholder="Username" type="text" />
+                  <div className="sixteen wide column rendered-example collections-form-shorthand-form-example-subcomponent-id">
+                    <form className="ui form" onSubmit={this.handleSubmit}>
+                      <div className="equal width fields">
+                        <div className="field">
+                          <label htmlFor="form-subcomponent-shorthand-input-first-name">Username</label>
+                            <div className="ui fluid input">
+                                <input id="form-subcomponent-shorthand-input-first-name" placeholder="Username" name="username" type="text"  value={username} onChange={this.handleChange} required/>
                             </div>
                         </div>
-                        <div class="field">
-                        <label for="form-subcomponent-shorthand-password">Password</label>
-                        <div class="ui fluid input">
-                          <input id="form-subcomponent-shorthand-password" placeholder="Password" type="text" />
+                        <div className="field">
+                        <label htmlFor="form-subcomponent-shorthand-email">Email</label>
+                        <div className="ui fluid input">
+                          <input id="form-subcomponent-shorthand-email" placeholder="Email" type="email" name="email" value={email} onChange={this.handleChange} required/>
+                        </div>
+                        </div>
+                        <div className="field">
+                        <label htmlFor="form-subcomponent-shorthand-password">Password</label>
+                        <div className="ui fluid input">
+                          <input id="form-subcomponent-shorthand-password" placeholder="Password" type="password" name="password" value={password} onChange={this.handleChange} required/>
                         </div>
                         </div>
                     </div>
-                    <button class="ui animated button">
-                      <div class="visible content">Register</div>
-                        <div class="hidden content">
-                          <i aria-hidden="true" class="arrow right icon"></i>
+                    <button className="ui animated button" type="submit ">
+                      <div className="visible content">Register</div>
+                        <div className="hidden content">
+                          <i aria-hidden="true" className="arrow right icon"></i>
                         </div>
                     </button>
                    </form>
