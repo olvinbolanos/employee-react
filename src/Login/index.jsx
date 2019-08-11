@@ -106,7 +106,7 @@ class Login extends Component {
                 New to us? <a href="#">Sign Up</a>
                 </div> */}
             </div> 
-             : <Redirect to="/employees" />
+             : <Redirect to="/employees" name={username}/>
             }
         </div>
         )
