@@ -5,6 +5,7 @@ import EditEmployee from './EditEmployee'
 class Employee extends Component {
    state = {
       employees: [],
+      images: [],
       showEditModal: false,
       employeeToEdit: {
          _id: null,
@@ -12,8 +13,20 @@ class Employee extends Component {
          description: ''
       }
    }
-   componentDidMount() {
-      this.getEmployees();
+   async componentDidMount() {
+      const allEmp = await this.getEmployees();
+      const sesameStreetImages = await this.getImages();
+      const employeesCopy = [...allEmp]
+      const employeesList2 = await sesameStreetImages.forEach((images, i) => {
+         const imgName = images.title
+         employeesCopy.find(user => user.name === imgName).url = images.image.original.url
+         employeesCopy.find(user => user.name === imgName).thumb = images.image.thumb.url
+      })
+   
+      this.setState({
+         employees: employeesCopy,
+         images : sesameStreetImages
+      })
    }
    addEmployee = async (employee, e) => {
       e.preventDefault();
@@ -27,12 +40,10 @@ class Employee extends Component {
                'Content-Type': 'application/json'
             }
          })
-         console.log(createEmployee, '<-- create Employee fetch')
          if(createEmployee.status !== 200){
             throw Error('Resource no found')
          }
          const createEmployeeResponse = await createEmployee.json();
-         console.log(createEmployeeResponse.data, ' <-- createEmployeeResponse');
          this.setState({
             employees: [...this.state.employees, createEmployeeResponse.data]
          })
@@ -47,18 +58,29 @@ class Employee extends Component {
             credentials: 'include',
             method: 'GET'
          });
-         console.log(responseGetEmployees, '<--- responseGetEmployees')
          if(responseGetEmployees.status !== 200){
             throw Error('404 from server');
          }
          const employeeResponse = await responseGetEmployees.json();
-         console.log(employeeResponse, '<---employeeResponse')
-         this.setState({
-            employees: [...employeeResponse.data]
-         });
+         return employeeResponse.data
+         // this.setState({
+         //    employees: [...employeeResponse.data]
+         // });
       } catch(err){
          console.log(err, ' getEmployees Err0rs <--');
          return err
+      }
+   }
+   getImages = async () => {
+      try {
+         const images = await fetch('https://api.are.na/v2/channels/sesame-street-employee-union')
+         if(!images.ok){
+            throw Error(Response.statusText)
+         }
+         const sesameImages = await images.json()
+         return sesameImages.contents
+      } catch(err) {
+         console.log(err)
       }
    }
    handleFormChange = (e) => {
@@ -70,7 +92,6 @@ class Employee extends Component {
       })
    }
    showModal = (employee) => {
-      console.log(employee, 'employee._ID in show modal')
       this.setState({
          employeeToEdit: employee,
          showEditModal: !this.state.showEditModal
@@ -79,7 +100,6 @@ class Employee extends Component {
    closeAndEdit = async (e) => {
       e.preventDefault();
       try {
-         console.log(this.state.employeeToEdit._id, '<----this.state.employeeToEdit._id <---')
          const editRequest = await fetch('http://localhost:9000/api/v1/employee/' +
          this.state.employeeToEdit._id, {
             method: 'PUT',
@@ -93,7 +113,6 @@ class Employee extends Component {
             throw Error('editRequest not working')
          }
          const editResponse = await editRequest.json();
-         console.log(editResponse, '<---editResponse')
 
          const editedEmployeeArray = this.state.employees.map((employee) =>{
             if(employee._id === editResponse.data._id){
@@ -105,7 +124,6 @@ class Employee extends Component {
             employees : editedEmployeeArray,
             showEditModal: false
          })
-         console.log(editResponse, 'editResponse')
       } catch(err){
          console.log(err, ' error closeAndEdit');
          return err
@@ -113,12 +131,11 @@ class Employee extends Component {
    }
    
    render(){
-      console.log(this.state,'< state in render')
       return(
          <div>
             <CreateEmployee addEmployee={this.addEmployee}/>
             Sesame Street EMPLOYEES
-            <EmployeeList employees={this.state.employees} showModal={this.showModal} deleteEmployee={this.deleteEmployee}/>
+            <EmployeeList employees={this.state.employees} images={this.state.images} showModal={this.showModal} deleteEmployee={this.deleteEmployee}/>
             {this.state.showEditModal ? <EditEmployee closeAndEdit={this.closeAndEdit} employeeToEdit={this.state.employeeToEdit} handleFormChange={this.handleFormChange}/> : null}
             
          </div>
