@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hello from '../Hello'
+import '../App.css';
 
 class CreateEmployee extends Component {
    state = {
@@ -13,9 +13,11 @@ class CreateEmployee extends Component {
       this.setState({[e.currentTarget.name] : e.currentTarget.value})
    }
    
-   render(){
+   render() {
       return (
+         
          <form onSubmit={this.props.addEmployee.bind(null, this.state)}>
+            
             <label htmlFor='name'>Employee Name:
                <input type='text' name='name' onChange={this.updateEmployee} value={this.state.name}/>
             </label>
@@ -40,6 +42,8 @@ class CreateEmployee extends Component {
                Create Employee
             </button>
          </form>
+       
+         
       )
    }
 }

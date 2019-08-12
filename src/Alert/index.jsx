@@ -29,7 +29,7 @@ class Alert extends Component {
       
     };
     render() {
-
+      
       return this.state.message ? (
         <div className="alert">
           <div className="ui error message" style={{display: 'block', color: 'black'}}>{this.props.message}</div>

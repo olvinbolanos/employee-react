@@ -63,7 +63,7 @@ class Login extends Component {
             <div className="ui middle aligned center aligned grid">
               <div className="column">
                 <h2 className="ui teal image header"></h2>
-                <img src="#" className="image" />
+                <img src="grover_thumb.jpg" className="image" />
                 <div className="content">
                     Log-in to your account
                 </div>
@@ -106,7 +106,7 @@ class Login extends Component {
                 New to us? <a href="#">Sign Up</a>
                 </div> */}
             </div> 
-             : <Redirect to="/employees" />
+             : <Redirect to="/employees" name={this.state.username}/>
             }
         </div>
         )
