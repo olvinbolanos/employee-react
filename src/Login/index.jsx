@@ -21,6 +21,26 @@ class Login extends Component {
         })
     } 
 
+    componentDidMount() {
+        this.redirectIfAdmin()
+    }
+
+      redirectIfAdmin = async () => {
+        try {
+           const responseGetUsers = await fetch("http://localhost:9000/auth")
+           console.log(responseGetUsers, '<--- responseGetUsers')
+           if(responseGetUsers.status !== 200){
+              throw Error('404 from server');
+           }
+           const usersResponse = await responseGetUsers.json();
+           console.log(usersResponse, '<---usersResponse')
+        
+        } catch(err){
+           console.log(err, ' getEmployees Err0rs <--');
+           return err
+        }
+     }
+
     handleSubmit = async (e) => {
         e.preventDefault()
         const login = await fetch("http://localhost:9000/auth/login", {
@@ -40,6 +60,7 @@ class Login extends Component {
                 message: ''
             })
             console.log('logged in')
+            this.redirectIfAdmin()
         } else {
             console.log('failed login')
             this.setState({

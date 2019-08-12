@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-class Greet extends Component {
-  render() {
-  console.log('this worked')
-    return (
-      <main>
-        <h1>What up</h1>
-      </main>
-    )
-  }
+const Greet = () => {
+  return(
+     <div>
+       <h1>Hello</h1>
+     </div>
+  )
+
+
 }
 
 export default Greet

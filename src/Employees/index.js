@@ -12,7 +12,7 @@ class Employee extends Component {
          description: ''
       }
    }
-   componentDidMount(){
+   componentDidMount() {
       this.getEmployees();
    }
    addEmployee = async (employee, e) => {
