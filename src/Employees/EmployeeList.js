@@ -1,11 +1,8 @@
 import React from 'react';
-// import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from 'constants';
 
 
 const Employees = (props) => {
-   console.log(props, '<---propszzzzzzzz')
-   const employeesList = props.employees.map((employee) => {
-      
+   const employeesList = props.employees.map((employee,i) => {
       
       const dob = `${new Date(employee.birthDate)}`
       return (
