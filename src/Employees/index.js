@@ -19,8 +19,10 @@ class Employee extends Component {
       const employeesCopy = [...allEmp]
       const employeesList2 = await sesameStreetImages.forEach((images, i) => {
          const imgName = images.title
+         if (allEmp.length > 0){
          employeesCopy.find(user => user.name === imgName).url = images.image.original.url
          employeesCopy.find(user => user.name === imgName).thumb = images.image.thumb.url
+         console.log('if than on line 25')}
       })
    
       this.setState({
@@ -73,7 +75,7 @@ class Employee extends Component {
    }
    getImages = async () => {
       try {
-         const images = await fetch('https://api.are.na/v2/channels/sesame-street-employee-union')
+         const images = await fetch('https://api.are.na/v2/channels/sempee')
          if(!images.ok){
             throw Error(Response.statusText)
          }
