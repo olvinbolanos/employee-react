@@ -19,8 +19,10 @@ class Employee extends Component {
       const employeesCopy = [...allEmp]
       const employeesList2 = await sesameStreetImages.forEach((images, i) => {
          const imgName = images.title
+         if (allEmp.length > 0){
          employeesCopy.find(user => user.name === imgName).url = images.image.original.url
          employeesCopy.find(user => user.name === imgName).thumb = images.image.thumb.url
+         console.log('if than on line 25')}
       })
    
       this.setState({
