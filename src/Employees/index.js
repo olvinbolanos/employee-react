@@ -129,7 +129,26 @@ class Employee extends Component {
          return err
       }
    }
-   
+   deleteEmployee = async (id) => {
+      try{
+         const deleteEmployee = await fetch('http://localhost:9000/api/v1/employee/' + id, {
+            method: 'DELETE',
+            credentials: 'include'
+         })
+         if(deleteEmployee.status !== 200){
+            throw Error('something happened while deleting')
+         }
+         const deleteEmployeeJson = await deleteEmployee.json();
+         console.log(deleteEmployeeJson.status.message)
+         this.setState({
+            employees: this.state.employees.filter((employee) => employee._id !== id)
+         })
+      } catch(err){
+         console.log(err);
+         return err
+      }
+
+   }
    render(){
       return(
          <div>
