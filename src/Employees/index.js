@@ -73,7 +73,7 @@ class Employee extends Component {
    }
    getImages = async () => {
       try {
-         const images = await fetch('https://api.are.na/v2/channels/sesame-street-employee-union')
+         const images = await fetch('https://api.are.na/v2/channels/sempee')
          if(!images.ok){
             throw Error(Response.statusText)
          }
